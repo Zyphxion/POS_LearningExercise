@@ -214,7 +214,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
@@ -223,16 +222,10 @@
     <Content Include="Views\Inventory\Details.cshtml" />
     <Content Include="Views\Inventory\Edit.cshtml" />
     <Content Include="Views\Inventory\Index.cshtml" />
-    <Content Include="Views\Register\Create.cshtml" />
-    <Content Include="Views\Register\Delete.cshtml" />
-    <Content Include="Views\Register\Details.cshtml" />
-    <Content Include="Views\Register\Edit.cshtml" />
     <Content Include="Views\Register\Index.cshtml" />
     <Content Include="Views\Register\Pay.cshtml" />
-    <Content Include="Views\Reports\Create.cshtml" />
     <Content Include="Views\Reports\Delete.cshtml" />
     <Content Include="Views\Reports\Details.cshtml" />
-    <Content Include="Views\Reports\Edit.cshtml" />
     <Content Include="Views\Reports\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
