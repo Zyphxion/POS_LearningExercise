@@ -1,0 +1,12 @@
+﻿@model Decimal
+
+@{
+    ViewBag.Title = "Pay";
+}
+
+<h2>Thank you!</h2>
+<h3>Change due: $@Decimal.Round(Model, 2)</h3>
+<p>
+    @Html.ActionLink("Back to Register", "Index")
+</p>
+

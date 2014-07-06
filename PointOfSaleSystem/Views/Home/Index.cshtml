@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Vidya Game Emporeum</h1>
+    <p class="lead">A test POS system designed by Mark Escobedo</p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Register</h2>
+        <p>
+            Sell products here!
+        </p>
+        <p>@Html.ActionLink("Register", "Index", "Register", new { @class = "btn btn-default" }, null)</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Inventory</h2>
+        <p>Add, remove, and edit items here!</p>
+        <p>@Html.ActionLink("Inventory", "Index", "Inventory", new { @class = "btn btn-default" }, null)</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Reports</h2>
+        <p>See how much money you've made!</p>
+        <p>@Html.ActionLink("Reports", "Index", "Reports", new { @class = "btn btn-default" }, null)</p>
+    </div>
+</div>

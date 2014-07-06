@@ -1,0 +1,85 @@
+﻿@model PointOfSaleSystem.ViewModels.Item_Category
+@using PointOfSaleSystem.Helpers;
+
+@{
+    ViewBag.Title = "Inventory";
+}
+
+<h2>Inventory</h2>
+
+
+
+@using (Html.BeginForm("Search", "Inventory"))
+{ 
+    @Html.Editor("SearchBox")
+    <input type="submit" value="Search" />
+}
+<br />
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.items[0].Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.items[0].UPC)
+        </th>
+        <th>
+            Category
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.items[0].Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.items[0].Cost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.items[0].Quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.items[0].Taxable)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.items) {
+    <tr>
+        <td>
+            @Html.Truncate(item.Description, 20)
+            @*@Html.DisplayFor(modelItem => item.Description)*@
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UPC)
+        </td>
+        <td>
+           @Model.categories.Find(category => category.CategoryId == item.CategoryId).Name.ToString()
+           @*@Html.DisplayFor(modelItem => item.CategoryId)*@
+        </td>
+        <td>
+            $@Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            $@Html.DisplayFor(modelItem => item.Cost)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Taxable)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ItemId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ItemId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ItemId })
+        </td>
+    </tr>
+}
+
+</table>
+
+<p>
+    @Html.ActionLink("Clear Search Results", "Index")
+</p>

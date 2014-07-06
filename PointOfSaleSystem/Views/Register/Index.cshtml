@@ -1,0 +1,81 @@
+﻿@model PointOfSaleSystem.ViewModels.Item_Sale
+@using PointOfSaleSystem.Helpers;
+
+@{
+    ViewBag.Title = "Register";
+    ViewBag.Subtotal = 0.0m;
+    ViewBag.Tax = 0.0m;
+}
+
+<h2>Register</h2>
+
+@using (Html.BeginForm("Search", "Register"))
+{
+    @Html.Editor("SearchBox")
+    <input type="submit" value="Add by UPC" />
+}
+<br />
+Transaction ID: @ViewBag.TransId
+<br /><br />
+<table class="table">
+    <tr>
+        <th>
+            Description
+        </th>
+        <th>
+            UPC
+        </th>
+        <th>
+            Price
+        </th>
+        <th>
+            Quantity
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var sale in Model.sales) {
+    <tr>
+        <td>
+            @Html.Truncate(Model.items.Find(desc => desc.ItemId == sale.ItemId).Description.ToString(), 20)
+        </td>
+        <td>
+            @Model.items.Find(desc => desc.ItemId == sale.ItemId).UPC.ToString()
+        </td>
+        <td>
+            $@Model.items.Find(desc => desc.ItemId == sale.ItemId).Price
+        </td>
+        <td>
+            @Html.ActionLink("-", "SubQuant", new { id = sale.ItemId })
+            @Html.DisplayFor(modelItem => sale.AmountSold)
+            @Html.ActionLink("+", "AddQuant", new { id = sale.ItemId })
+        </td>
+        <td>
+            @Html.ActionLink("Delete", "Delete", new { id = sale.ItemId })
+        </td>
+    </tr>
+}
+</table>
+<br />
+@foreach (var sale in Model.sales){
+    ViewBag.subtotal += sale.Item.Price * sale.AmountSold;
+    if (sale.Item.Taxable)
+    {
+        ViewBag.Tax += (sale.Item.Price * 0.09m * sale.AmountSold);
+    }
+}
+<h4>Subtotal: $@ViewBag.Subtotal</h4> 
+<h4>Tax: $@Decimal.Round(ViewBag.Tax, 2)</h4> 
+<h4>Total: $@(ViewBag.Subtotal + Decimal.Round(ViewBag.Tax, 2))</h4>
+
+@using (Html.BeginForm("Pay", "Register"))
+{
+    @Html.Editor("Payment")
+    <input type="submit" value="Pay With Cash" />
+}
+<br />
+@using (Html.BeginForm("Pay", "Register"))
+{
+    <input type="submit" value="Pay With Card" />
+}
+<br /><br />

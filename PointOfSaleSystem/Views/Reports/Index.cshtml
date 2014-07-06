@@ -1,0 +1,90 @@
+﻿@model IEnumerable<PointOfSaleSystem.Models.Sale>
+
+@{
+    ViewBag.Title = "Reports";
+    ViewBag.Total = 0.00m;
+    ViewBag.Cost = 0.00m;
+    ViewBag.TempTotal = 0.00m;
+}
+
+
+@foreach (var sale in Model)
+{
+    if (sale.Item.Taxable)
+    {
+        ViewBag.Total += (sale.Item.Price + (sale.Item.Price * 0.09m)) * sale.AmountSold;
+    }
+    else 
+    {
+        ViewBag.Total += (sale.Item.Price) * sale.AmountSold;
+    }
+    ViewBag.Cost += sale.Item.Cost * sale.AmountSold;
+}
+<h2>Reports</h2>
+
+<h4>Total: $@Decimal.Round(ViewBag.Total, 2)</h4>
+<h4>Cost: $@Decimal.Round(ViewBag.Cost, 2)</h4>
+<h4>Profit: $@Decimal.Round(ViewBag.Total - ViewBag.Cost, 2)</h4>
+<br /><br />
+@using (Html.BeginForm("Search", "Reports"))
+{
+    @Html.Editor("SearchBox")
+    <input type="submit" value="Search" />
+}
+<br />
+<table class="table">
+    <tr>
+        <th>
+            Description
+        </th>
+        <th>
+            Transaction ID
+        </th>
+        <th>
+            Amount Sold
+        </th>
+        <th>
+            Total
+        </th>
+        <th>
+            Sale Date
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var sale in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => sale.Item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => sale.TransactionId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => sale.AmountSold)
+        </td>
+        @if (sale.Item.Taxable)
+        {
+            <td>
+                @{ViewBag.TempTotal = (sale.Item.Price + (sale.Item.Price * 0.09m)) * sale.AmountSold;}
+                $@Decimal.Round(ViewBag.TempTotal, 2)
+            </td>  
+        }
+        else
+        {
+            <td>
+                @{ViewBag.TempTotal = (sale.Item.Price) * sale.AmountSold;}
+                $@Decimal.Round(ViewBag.TempTotal, 2)
+            </td>
+        }
+        <td>
+            @Html.DisplayFor(modelItem => sale.SaleDate)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id = sale.SaleId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = sale.SaleId })
+        </td>
+    </tr>
+}
+
+</table>
